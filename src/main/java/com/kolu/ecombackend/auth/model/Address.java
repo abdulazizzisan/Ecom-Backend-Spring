@@ -24,6 +24,6 @@ public class Address {
     private String landmark;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "user_id")
     private User user;
 }

@@ -73,6 +73,8 @@ public class AuthService {
                 .address(address)
                 .build();
 
+        address.setUser(user);
+
         userRepository.save(user);
 
         String token = jwtService.generateToken(user);
