@@ -50,4 +50,13 @@ public class AdminController {
     ) {
         return ResponseEntity.ok(authService.registerUser(registerRequest, Roles.ADMIN));
     }
+
+    @Operation(
+            summary = "Get Admin Info",
+            description = "Pass the jwt token in the header and get the information of the currently logged in admin."
+    )
+    @GetMapping
+    public UserInfo getAdminInfo() {
+        return infoService.getUserInfo(Roles.ADMIN);
+    }
 }
