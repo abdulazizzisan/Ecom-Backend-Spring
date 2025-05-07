@@ -3,6 +3,7 @@ package com.kolu.ecombackend.auth.service;
 import com.kolu.ecombackend.auth.model.Address;
 import com.kolu.ecombackend.auth.model.Roles;
 import com.kolu.ecombackend.auth.model.User;
+import com.kolu.ecombackend.auth.model.dto.LoginRequest;
 import com.kolu.ecombackend.auth.model.dto.LoginResponse;
 import com.kolu.ecombackend.auth.model.dto.RegisterRequest;
 import com.kolu.ecombackend.auth.model.dto.RegisterResponse;
@@ -24,14 +25,18 @@ public class AuthService {
     private final AuthenticationManager authManager;
     private final PasswordEncoder passwordEncoder;
 
-    public LoginResponse loginUser(RegisterRequest registerRequest) {
-        User user = userRepository.findByEmail(registerRequest.email())
+    public LoginResponse loginUser(LoginRequest loginRequest, Roles role) {
+        User user = userRepository.findByEmail(loginRequest.email())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        if (!user.getRole().equals(role)) {
+            throw new IllegalArgumentException("User not authorized");
+        }
 
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        registerRequest.email(),
-                        registerRequest.password()
+                        loginRequest.email(),
+                        loginRequest.password()
                 )
         );
         String token = jwtService.generateToken(user);

@@ -1,6 +1,7 @@
 package com.kolu.ecombackend.auth.controller;
 
 import com.kolu.ecombackend.auth.model.Roles;
+import com.kolu.ecombackend.auth.model.dto.LoginRequest;
 import com.kolu.ecombackend.auth.model.dto.LoginResponse;
 import com.kolu.ecombackend.auth.model.dto.RegisterRequest;
 import com.kolu.ecombackend.auth.service.AuthService;
@@ -29,10 +30,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> loginUser(
             @RequestBody
-            RegisterRequest registerRequest
+            LoginRequest loginRequest
     ) {
 
-        return ResponseEntity.ok(authService.loginUser(registerRequest));
+        return ResponseEntity.ok(authService.loginUser(loginRequest, Roles.USER));
     }
     @Operation(
             summary = "Register as User.",
