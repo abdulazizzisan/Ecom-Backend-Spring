@@ -44,13 +44,13 @@ public class AuthService {
 
         return LoginResponse.builder()
                 .success(true)
-                .role(Roles.USER)
+                .role(role)
                 .token(token)
                 .validTill(expiration)
                 .build();
     }
 
-    public Object registerUser(RegisterRequest request, Roles role) {
+    public RegisterResponse registerUser(RegisterRequest request, Roles role) {
         if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new IllegalArgumentException("User Already Exists");
         }
