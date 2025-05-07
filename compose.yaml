@@ -7,3 +7,31 @@ services:
       - 'POSTGRES_USER=zisan'
     ports:
       - '5433:5432'
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+
+volumes:
+  postgres_data:
+    name: ecom-postgres-data
+
+#############################################
+# Guide to remove the volume and start fresh
+
+# # Stop the container
+# docker-compose down
+
+# # Remove the volume
+# docker volume rm ecom-postgres-data
+
+# # Start fresh
+# docker-compose up -d
+
+#############################################
+# Backup and restore the database
+# Backup
+# docker exec postgres-ecom pg_dump -U zisan -d ecomdb > backup.sql
+
+# # Reset (as above)
+
+# # Restore (after container is up again)
+# cat backup.sql | docker exec -i postgres-ecom psql -U zisan -d ecomdb
