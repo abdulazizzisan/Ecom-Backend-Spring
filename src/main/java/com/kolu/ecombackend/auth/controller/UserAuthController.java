@@ -6,7 +6,6 @@ import com.kolu.ecombackend.auth.model.dto.LoginResponse;
 import com.kolu.ecombackend.auth.model.dto.RegisterRequest;
 import com.kolu.ecombackend.auth.model.dto.UserInfo;
 import com.kolu.ecombackend.auth.service.AuthService;
-import com.kolu.ecombackend.auth.service.InfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth/user")
 @RequiredArgsConstructor
-public class UserController {
+public class UserAuthController {
     private final AuthService authService;
-    private final InfoService infoService;
 
     @Operation(
             summary = "Login as User.",
@@ -49,14 +47,5 @@ public class UserController {
             RegisterRequest registerRequest
     ) {
         return ResponseEntity.ok(authService.registerUser(registerRequest, Roles.USER));
-    }
-
-    @Operation(
-            summary = "Get User Info",
-            description = "Pass the jwt token in the header and get the information of the currently logged in user."
-    )
-    @GetMapping
-    public UserInfo getUserInfo() {
-        return infoService.getUserInfo(Roles.USER);
     }
 }
