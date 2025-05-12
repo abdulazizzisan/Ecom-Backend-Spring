@@ -27,7 +27,7 @@ public class SpringDocConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("E-commerce Backend API")
-                        .version("0.1.0")
+                        .version("0.2.0")
                         .description("API documentation for the E-commerce backend application.")
                 )
                 .servers(servers)
