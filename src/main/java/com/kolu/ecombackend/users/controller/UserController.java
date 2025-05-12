@@ -1,15 +1,14 @@
 package com.kolu.ecombackend.users.controller;
 
+import com.kolu.ecombackend.users.model.ChangePasswordRequest;
 import com.kolu.ecombackend.users.model.UserResponse;
 import com.kolu.ecombackend.users.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,4 +50,14 @@ public class UserController {
         return users;
     }
 
+    @Operation(
+            summary = "Change Password",
+            description = "Change the password of the currently logged in user."
+    )
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
+        return userService.changePassword(request) ?
+                ResponseEntity.ok("Password changed successfully") :
+                ResponseEntity.badRequest().body("Failed to change password");
+    }
 }

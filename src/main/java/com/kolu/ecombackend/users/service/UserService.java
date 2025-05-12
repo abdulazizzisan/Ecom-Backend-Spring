@@ -4,11 +4,13 @@ import com.kolu.ecombackend.auth.model.Roles;
 import com.kolu.ecombackend.auth.model.User;
 import com.kolu.ecombackend.auth.repository.UserRepository;
 import com.kolu.ecombackend.users.model.AddressResponse;
+import com.kolu.ecombackend.users.model.ChangePasswordRequest;
 import com.kolu.ecombackend.users.model.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse getUserByEmail(String email) {
         User user = userRepository.findByEmail(email)
@@ -35,6 +38,17 @@ public class UserService {
         var users = userRepository.findAllByRole(Roles.USER).orElseThrow(() -> new UsernameNotFoundException("No users found"));
 
         return users.stream().map(this::userToResponse).toList();
+    }
+
+    public boolean changePassword(ChangePasswordRequest request) {
+        var user = userRepository.findByEmail(getCurrentUserEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (!passwordEncoder.matches(request.oldPassword(), user.getPassword())) {
+            return false;
+        }
+        user.setPassword(passwordEncoder.encode(request.newPassword()));
+        userRepository.save(user);
+        return true;
     }
 
     private UserResponse userToResponse(User user) {
