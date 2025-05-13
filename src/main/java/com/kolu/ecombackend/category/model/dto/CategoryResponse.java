@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Builder
 public record CategoryResponse(
-        Long id,
+        Integer id,
         String name,
         String description,
         String imageUrl,

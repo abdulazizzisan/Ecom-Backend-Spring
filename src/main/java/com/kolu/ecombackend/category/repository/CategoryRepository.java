@@ -1,0 +1,8 @@
+package com.kolu.ecombackend.category.repository;
+
+import com.kolu.ecombackend.category.model.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CategoryRepository extends JpaRepository<Category, Integer> {}

@@ -1,37 +1,46 @@
 package com.kolu.ecombackend.category.model;
 
+import com.kolu.ecombackend.category.model.dto.CategoryResponse;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String name;
 
     private String description;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
 //    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 //    private Set<Product> products = new HashSet<>();
-
-    @Column(name = "is_active")
-    private boolean active = true;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public CategoryResponse toResponse() {
+        return CategoryResponse.builder()
+                .id(id)
+                .name(name)
+                .description(description)
+                .createdAt(createdAt)
+                .build();
+    }
 }
