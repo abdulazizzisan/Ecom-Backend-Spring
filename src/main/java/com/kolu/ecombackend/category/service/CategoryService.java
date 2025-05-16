@@ -7,7 +7,6 @@ import com.kolu.ecombackend.category.repository.CategoryRepository;
 import com.kolu.ecombackend.category.utils.CategoryMappers;
 import com.kolu.ecombackend.product.model.dto.ProductResponse;
 import com.kolu.ecombackend.product.repository.ProductRepository;
-import com.kolu.ecombackend.product.service.ProductService;
 import com.kolu.ecombackend.product.utils.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,7 @@ public class CategoryService {
                         .save(category));
     }
 
+    //todo: Fix this
     public List<CategoryResponse> getAllCategories() {
         return repository
                 .findAll()

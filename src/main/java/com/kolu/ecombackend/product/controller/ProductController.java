@@ -1,5 +1,6 @@
 package com.kolu.ecombackend.product.controller;
 
+import com.kolu.ecombackend.product.model.dto.PagedProductResponse;
 import com.kolu.ecombackend.product.model.dto.ProductRequest;
 import com.kolu.ecombackend.product.model.dto.ProductResponse;
 import com.kolu.ecombackend.product.service.ProductService;
@@ -30,8 +31,11 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponse> getAllProducts() {
-        return productService.getAllProducts();
+    public PagedProductResponse getAllProducts(
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "5") Integer size
+    ) {
+        return productService.getAllProducts(page, size);
     }
 
     @DeleteMapping("/{id}")

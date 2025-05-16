@@ -2,11 +2,15 @@ package com.kolu.ecombackend.product.service;
 
 import com.kolu.ecombackend.category.service.CategoryService;
 import com.kolu.ecombackend.product.model.Product;
+import com.kolu.ecombackend.product.model.dto.PagedProductResponse;
 import com.kolu.ecombackend.product.model.dto.ProductRequest;
 import com.kolu.ecombackend.product.model.dto.ProductResponse;
 import com.kolu.ecombackend.product.repository.ProductRepository;
 import com.kolu.ecombackend.product.utils.ProductMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,11 +45,25 @@ public class ProductService {
         return productMapper.toResponse(product);
     }
 
-    public List<ProductResponse> getAllProducts() {
-        return repository.findAll()
+    public PagedProductResponse getAllProducts(int page, int size) {
+
+        Pageable p = PageRequest.of(page, size);
+
+        Page<Product> products = repository.findAll(p);
+
+        List<ProductResponse> content = products.getContent()
                 .stream()
                 .map(productMapper::toResponse)
                 .toList();
+
+        return PagedProductResponse.builder()
+                .content(content)
+                .page(page)
+                .size(size)
+                .totalElements(products.getTotalElements())
+                .totalPages(products.getTotalPages())
+                .lastPage(products.isLast())
+                .build();
     }
 
     public void deleteProduct(Integer id) {
