@@ -3,6 +3,7 @@ package com.kolu.ecombackend.category.controller;
 import com.kolu.ecombackend.category.model.dto.CategoryRequest;
 import com.kolu.ecombackend.category.model.dto.CategoryResponse;
 import com.kolu.ecombackend.category.service.CategoryService;
+import com.kolu.ecombackend.product.model.dto.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +45,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}/products")
-    public void getCategoryProducts(@PathVariable Integer id) {
-        //todo
+    public List<ProductResponse> getCategoryProducts(@PathVariable Integer id) {
+        return  service.getCategoryProducts(id);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.kolu.ecombackend.category.model;
 
-import com.kolu.ecombackend.category.model.dto.CategoryResponse;
+import com.kolu.ecombackend.product.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,7 +20,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(nullable = false, unique = true)
@@ -26,8 +29,8 @@ public class Category {
 
     private String description;
 
-//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-//    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private Set<Product> products = new HashSet<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -35,12 +38,4 @@ public class Category {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public CategoryResponse toResponse() {
-        return CategoryResponse.builder()
-                .id(id)
-                .name(name)
-                .description(description)
-                .createdAt(createdAt)
-                .build();
-    }
 }
