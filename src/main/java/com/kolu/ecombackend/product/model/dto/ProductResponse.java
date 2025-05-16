@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
-import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Builder
 public record ProductResponse(
+        Integer id,
         @NotBlank
         String name,
         String description,
