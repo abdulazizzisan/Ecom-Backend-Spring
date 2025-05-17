@@ -5,12 +5,14 @@ import com.kolu.ecombackend.category.model.dto.CategoryResponse;
 import com.kolu.ecombackend.category.service.CategoryService;
 import com.kolu.ecombackend.product.model.dto.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Category", description = "Category API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/categories")
