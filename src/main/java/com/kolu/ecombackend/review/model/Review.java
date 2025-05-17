@@ -1,5 +1,6 @@
 package com.kolu.ecombackend.review.model;
 
+import com.kolu.ecombackend.auth.model.User;
 import com.kolu.ecombackend.product.model.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -32,6 +33,9 @@ public class Review {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
+
+    @ManyToOne
+    private User user;
 
     @CreationTimestamp
     LocalDateTime createdAt;

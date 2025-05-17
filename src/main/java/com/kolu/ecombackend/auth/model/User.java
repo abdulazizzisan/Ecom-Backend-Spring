@@ -1,5 +1,6 @@
 package com.kolu.ecombackend.auth.model;
 
+import com.kolu.ecombackend.review.model.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,9 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Roles role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
