@@ -11,8 +11,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,7 +30,7 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
