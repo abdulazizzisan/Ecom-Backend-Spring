@@ -1,6 +1,7 @@
 package com.kolu.ecombackend.product.model;
 
 import com.kolu.ecombackend.category.model.Category;
+import com.kolu.ecombackend.review.model.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -43,8 +45,8 @@ public class Product {
 //    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<ProductImage> images = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "product")
-//    private List<Review> reviews;
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
