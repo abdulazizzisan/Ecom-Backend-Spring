@@ -26,4 +26,10 @@ public class ReviewMappers {
                 .user(user)
                 .build();
     }
+
+    public Review toUpdateEntity(Review review, ReviewRequest request){
+        review.setUserReview(request.review());
+        review.setRating(request.rating());
+        return review;
+    }
 }

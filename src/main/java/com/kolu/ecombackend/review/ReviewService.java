@@ -33,4 +33,18 @@ public class ReviewService {
         Review newReview = mappers.toEntity(request, product, user);
         return mappers.toResponse(repository.save(newReview));
     }
+
+    public ReviewResponse getReview(Integer productId, User user) {
+        Review review = repository.findByProductIdAndUserId(productId, user.getId());
+        return mappers.toResponse(review);
+    }
+
+    public ReviewResponse updateReview(Integer reviewId, ReviewRequest request, User user) {
+        Review review = repository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+        if (!review.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("You are not authorized to update this review");
+        }
+        return mappers.toResponse(repository.save(mappers.toUpdateEntity(review, request)));
+    }
 }
